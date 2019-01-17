@@ -3,4 +3,4 @@
 
 reptile文件夹下为vue前端模块，server文件夹下为基于nodeJS的服务端以及express中间件。
 sserver文件夹下index.js为后台模块主入口，api.js 主要用来处理各种SQL操作，router.js为后台接口路由
-grasp文件下wallpaper.js为node爬虫主要模块。
+grasp文件下wallpaper.js为必应壁纸抓取模块。
