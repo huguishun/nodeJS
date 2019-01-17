@@ -12,7 +12,7 @@
                         <el-card :body-style="{ padding: '0px' }">
                             <img src="../../assets/meizi.png" class="image">
                             <div style="padding: 14px;">
-                                <span>妹子图</span>
+                                <span>必应壁纸</span>
                                 <div class="bottom clearfix">
                                     <time class="time">{{ currentDate }}</time>
                                     <el-button type="text" class="button" @click="See_meizi()">查看</el-button>
