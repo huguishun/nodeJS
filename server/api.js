@@ -58,7 +58,7 @@ module.exports =  {
         let promise = new Promise(function(resolve,reject){
             wallpaper.requestdata(resolve,reject)
         }).then(function (values){
-            queryimg(req,res,next,values)
+            removedata(req,res,next,values)
         })
     }
 }
@@ -80,64 +80,32 @@ function addsql(req,res) {
 }
 
 // 查询img
-function queryimg(req,res,next,values) {
-    const selectImg = `SELECT * FROM img `;
-    connection.query(selectImg,function(err,result) {
+// function queryimg(req,res,next,values) {
+//     const selectImg = `SELECT * FROM img `;
+//     connection.query(selectImg,function(err,result) {
+//         if(err) {
+//             console.log("查询报错：", err.message);
+//             return;
+//         }else{
+//             screen(result,values)
+//         }
+//     })
+// }
+// 删除原始数据
+function removedata(req,res,next,values){
+    let removesql = 'delete from img';
+    connection.query(removesql,function(err,result){
         if(err) {
-            console.log("查询报错：", err.message);
+            console.log('清除失败：',err.message);
             return;
         }else{
-            screen(result,values)
+            increase(req,res,next,values)
         }
     })
 }
-// 去除数据库已有数据
-function screen(result,values) {
-    console.log("result-----"+JSON.stringify(values))
-    for (let index = 0; index < result.length; index++) {
-        let selectUser = `SELECT * FROM img WHERE imgsrc='${result[index].imgsrc}'`;
-        connection.query(selectUser, function (err, result) {
-            if (err) {
-                console.log("查询报错：", err.message);
-                return;
-            } else if (result.length == 0) {
-                console.log("图片不存在")
-                addsql(req,res)
-            } else {
-                let data = {
-                    'msg': '当前账号已注册',
-                    'status': 1
-                }
-                res.json(data);
-                
-            }
-        })
-        
-    }
 
-
-
-    // var dataimg = {imgsrc:'',imgname:''};
-	// var temp_imgname = [];
-	// var temp_imgsrc = [];
-	// for (var i = 0; i < result.length; i++) {
-	// 	if (imgname.indexOf(result[i].imgname) == -1) {
-	// 		temp_imgname.push(result[i].imgname);
-	// 	}
-	// }
-	// for (var i = 0; i < result.length; i++) {
-	// 	if (imgsrc.indexOf(result[i].imgsrc) == -1) {
-	// 		console.log(result[i].imgsrc)
-	// 		temp_imgsrc.push(result[i].imgsrc);
-	// 	}
-	// }
-    // dataimg.imgsrc = temp_imgsrc;
-    // dataimg.imgname = temp_imgname;
-    // console.log('data----'+JSON.stringify(dataimg))
-}
 // 存储图片
-function increase(values) {
-    // console.log(values)
+function increase(req,res,next,values) {
 	for (var i = 0; i < values.imgsrc.length; i++) {
 		// 建立表
 		// connection.query("CREATE TABLE person(id int primary key,user varchar(255),password varchar(255))")
@@ -152,5 +120,7 @@ function increase(values) {
 			console.log("插入成功！"+JSON.stringify(result))
 		})
 		}
-	}
+    }
+    let data = {'img':values.imgsrc,'code':1}
+    return res.json(data);
 }

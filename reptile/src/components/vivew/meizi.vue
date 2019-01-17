@@ -4,7 +4,7 @@
             <el-header style="background-color:#f56c6c">Header</el-header>
             <el-main>
                 <ul class="imgbox">
-                    <li v-for="(item,index) in imgs" :key="index"><img :src="item.src"></li>
+                    <li v-for="(item,index) in imgs" :key="index"><img :src="item"></li>
                 </ul>
             </el-main>
         </el-container>
@@ -26,11 +26,9 @@ export default {
     methods: {
         getimg() {
             axios.get("/api/meizi").then(res => {
-                
-                if (res.data.length > 0) {
-                    console.log(res.data)
-                    this.imgs=res.data;
-                    console.log(this.imgs.length)
+                if (res.data.code == '1') {
+                    this.imgs=res.data.img;
+                    console.log(this.imgs)
                 } else {
                     this.$message({
                         message: "暂无数据！",
