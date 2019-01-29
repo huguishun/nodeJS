@@ -54,7 +54,7 @@ module.exports =  {
         })
     },
     // 获取img
-    async getimgdata(req,res,next){
+    getimgdata(req,res,next){
         let promise = new Promise(function(resolve,reject){
             wallpaper.requestdata(resolve,reject)
         }).then(function (values){
